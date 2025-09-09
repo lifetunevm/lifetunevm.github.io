@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>LifeTune — публикация</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6c5ce7">
+  <style>
+    :root { --c:#111; --m:#666; --b:#6c5ce7; }
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;margin:0;display:grid;min-height:100dvh;place-items:center;background:#fafafa;color:var(--c)}
+    .card{max-width:560px;width:92%;background:#fff;border-radius:16px;padding:24px;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+    h1{margin:0 0 8px;font-size:22px}
+    p{margin:8px 0 16px;color:var(--m)}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:600;cursor:pointer;text-decoration:none;text-align:center}
+    .btn-primary{background:var(--b);color:#fff}
+    .btn-ghost{background:#f1f1f5;color:var(--c)}
+    .muted{color:var(--m);font-size:13px;margin-top:12px}
+    code{background:#f5f5f5;padding:2px 6px;border-radius:6px}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Открыть публикацию в приложении</h1>
+    <p id="desc">Публикация <code id="pid"></code></p>
+    <div class="row">
+      <a id="openApp" class="btn btn-primary" href="#">Открыть в LifeTune</a>
+      <a id="installApp" class="btn btn-ghost" target="_blank" rel="noopener" href="#">Установить приложение</a>
+      <button id="copyLink" class="btn btn-ghost" type="button">Скопировать ссылку</button>
+    </div>
+    <p class="muted">Если приложение не установлено, воспользуйтесь кнопкой “Установить”.</p>
+  </main>
+
+  <script>
+    // ЗАМЕНИТЕ на вашу реальную ссылку RuStore:
+    const RUSTORE_URL = https://www.rustore.ru/catalog/app/com.example.lifetune;
+
+    function getId() {
+      const u = new URL(location.href);
+      const id = u.searchParams.get("id");
+      return id || "";
+    }
+    const id = getId();
+    document.getElementById("pid").textContent = id || "(не указан)";
+    const deepLink = "lifetune://post/" + encodeURIComponent(id || "");
+    const webLink  = location.origin + "/post/?id=" + encodeURIComponent(id || "");
+
+    // Кнопки
+    const aOpen = document.getElementById("openApp");
+    const aInstall = document.getElementById("installApp");
+    const btnCopy = document.getElementById("copyLink");
+
+    aOpen.href = deepLink;
+    aInstall.href = RUSTORE_URL;
+    btnCopy.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(webLink);
+        btnCopy.textContent = "Скопировано ✔";
+        setTimeout(()=>btnCopy.textContent="Скопировать ссылку", 1500);
+      } catch(e){ alert("Не удалось скопировать"); }
+    });
+
+    // Автопереход в приложение (мягко)
+    if (id) {
+      // Небольшая задержка, чтобы страница успела отрендериться
+      setTimeout(()=>{ window.location.href = deepLink; }, 250);
+    }
+  </script>
+</body>
+</html>
