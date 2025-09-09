@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Redirect…</title>
+  <meta name="robots" content="noindex">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;padding:24px} .muted{color:#666}</style>
+</head>
+<body>
+  <h1>Перенаправление…</h1>
+  <p class="muted">Пожалуйста, подождите.</p>
+  <script>
+    (function () {
+      var p = location.pathname || "";
+      var q = location.search || "";
+      var h = location.hash || "";
+      function go(u){ location.replace(u); }
+
+      // 1) Старый путь: /EgievApp/post/{id}
+      if (p.indexOf("/EgievApp/post/") === 0) {
+        var id = p.substring("/EgievApp/post/".length);
+        return go("/post/?id=" + encodeURIComponent(id) + q + h);
+      }
+      // 2) Короткий путь: /post/{id}
+      if (p.indexOf("/post/") === 0) {
+        var id2 = p.substring("/post/".length);
+        if (id2 && id2 !== "/") return go("/post/?id=" + encodeURIComponent(id2) + q + h);
+      }
+      // Иначе – обычная 404 для Pages
+      document.body.innerHTML = "<h1>404</h1><p>Страница не найдена.</p>";
+    })();
+  </script>
+</body>
+</html>
