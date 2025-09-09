@@ -1,0 +1,22 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.lifetune",
+      "sha256_cert_fingerprints": [
+        "36:97:5E:7E:66:2D:D3:BD:BD:09:AA:55:12:10:24:47:95:12:8A:DC:73:39:46:39:1B:D5:FC:EF:6A:78:82:F6"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.lifetune",
+      "sha256_cert_fingerprints": [
+        " 88:6F:BA:81:37:06:DD:F7:64:CD:BA:AE:40:65:B8:89:42:7A:C5:E1:41:9D:6B:E7:7E:C2:24:16:F4:3C:B9:69"  
+      ]
+    }
+  }
+]
